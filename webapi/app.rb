@@ -22,15 +22,15 @@ class Server < Sinatra::Base
   # 以下設定が必要
   ##########
   # アクセス用のURL
-  SEC = "590544ee05762c62719e87d4ed79f807"
+  SEC = ""
   # Twitter API情報の設定
-  YOUR_CONSUMER_KEY = "nOovrLm0Q2QMkwS0o3U96DKak"
-  YOUR_CONSUMER_SECRET = "Csy4xEqY4l0aF3l51h8VktmoTxFdocpAoLd3zdCLsd4kum1o7k"
+  YOUR_CONSUMER_KEY = ""
+  YOUR_CONSUMER_SECRET = ""
   # /twitter/authで得たものに書き換える
-  TOKEN="3966409512-zTAeiRHDubROg3aDt69anl9rQUwZd7uI7cvnBx2"
-  SECRET="wfqe6ArYz4qSq6Ey4D3mmRRl1nDNA9PhSzw7Q1dfi22wL"
+  TOKEN=""
+  SECRET=""
   
-  SLACK_TOKEN = "xoxp-12917833618-12914069783-12915917908-9016a73b2f"
+  SLACK_TOKEN = ""
   ##########
   
   sensor_url = "/#{SEC}/:media/:type/:id/:value"
