@@ -1,15 +1,3 @@
-$wire = Wire.new( 0x0, Wire::DutyCycle_2 )  
-
-hum = HumidityHIH6130.new
-
-100.times
-  hum.calc
-  
-  puts "#{hum.tempereture}"
-  puts "#{hum.humidity}"
-  delay(1000)
-end
-
 # 湿度・温度計のクラス
 class HumidityHIH6130
   HIH6130_ADDRESS = 0x27
@@ -60,4 +48,16 @@ class HumidityHIH6130
   def status
     return @status
   end
+end
+
+$wire = Wire.new( 0x0, Wire::DutyCycle_2 )  
+
+hum = HumidityHIH6130.new
+
+100.times do
+  hum.calc
+  
+  puts "#{hum.tempereture}"
+  puts "#{hum.humidity}"
+  delay(1000)
 end

@@ -23,10 +23,12 @@ loop do
   end
   #####
 
-  # レスポンス生成
-  response = "HTTP/1.0 200 OK\r\n\r\n" + content
   # レスポンス送信
-  c.send response
+  c.send "HTTP/1.0 200 OK\r\n"
+  c.send "Content-Length: #{content.length}\r\n"
+  c.send "Content-Type: text/html\r\n"
+  c.send "\r\n"
+  c.send content
   
   # 待ち受け終了
   c.close
