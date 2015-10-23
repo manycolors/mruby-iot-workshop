@@ -1,5 +1,3 @@
-# 温度計のクラスを貼り付け
-# temp_bar.rbかtemp_bar_2.rbから
 class BarometerBMP
   #Bosch BMP085/BMP180
   
@@ -129,83 +127,10 @@ $wire = Wire.new( 0x0, Wire::DutyCycle_2 )
 
 sensor = BarometerBMP.new
 
-serv = TCPServer.open('192.168.0.0', 80) #IPアドレスは関係なし
-buf_len = 32
-
-temp = Array.new
-
-# グラフ用に10個埋める
-10.times do
-  sensor.calc
-  p temp << sensor.tempereture
-end
-
-content = Array.new
-
-# コンテンツ固定箇所前半
-content[0] = "<html>"
-content[0] += "<head>"
-content[0] += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
-content[0] += "<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
-content[0] += "<script type=\"text/javascript\">"
-content[0] += "  google.load('visualization', '1', {'packages':['corechart']});     "
-content[0] += "  google.setOnLoadCallback(drawChart);"
-content[0] += "  function drawChart() {      "
-content[0] += "    var data = google.visualization.arrayToDataTable(["
-content[0] += "      ['秒数', '温度'],"
-# コンテンツ固定箇所後半
-content[2] = "    ]);"
-content[2] += "    var options = {"
-content[2] += "      title: '温度の推移'"
-content[2] += "     };     "
-content[2] += "    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));"
-content[2] += "    chart.draw(data, options);"
-content[2] += "  }"
-content[2] += "</script>"
-content[2] += "</head>"
-content[2] += "<body>"
-content[2] += "  <div id=\"chart_div\" style=\"width: 100%; height: 350px\"></div>  "
-content[2] += "</body>"
-content[2] += "</html>"
-
-
+sensor.calc
 
 loop do
-  content[1] = ""
-  c = serv.accept
-
-  recv_text = nil
-  while (recv_text.nil?)
-    recv_text = c.recv(buf_len)
-  end
-
-  while (t = c.recv(buf_len))
-    recv_text += t
-  end
-  
-  temp.shift
-  
-  #####################
-  # temp_bar_2の人は書き換える必要あり
-  # 考えてみてください
-  #####################
-  sensor.calc
-  temp << sensor.tempereture
-
-  counter = temp.size
-  temp.each do |t|
-    counter -= 1
-    content[1] += "['-#{counter}', #{t}],"
-  end
-
-  # レスポンス送信
-  c.send "HTTP/1.0 200 OK\r\n"
-  c.send "Content-Length: #{content.join.length}\r\n"
-  c.send "Content-Type: text/html\r\n"
-  c.send "\r\n"
-  c.send content.join
-  
-  c.close
+  p sensor.temperature
+  p sensor.pressure
+  delay(1000)
 end
-
-serv.close
