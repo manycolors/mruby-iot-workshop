@@ -74,7 +74,7 @@ class BarometerBMP
 
     #p "ut=#{ut}, up=#{up}"
   
-    #tempereture
+    #temperature
     x1 = ( ut - @ac6 ) * @ac5 / 32768
     x2 = @mc * 2048 / ( x1 + @md )
     b5 = ( x1 + x2 ).to_i
@@ -137,7 +137,7 @@ temp = Array.new
 # グラフ用に10個埋める
 10.times do
   sensor.calc
-  p temp << sensor.tempereture
+  p temp << sensor.temperature
 end
 
 content = Array.new
@@ -190,7 +190,7 @@ loop do
   # 考えてみてください
   #####################
   sensor.calc
-  temp << sensor.tempereture
+  temp << sensor.temperature
 
   counter = temp.size
   temp.each do |t|
