@@ -157,7 +157,7 @@ loop do
   bar_cal = sensor.bar($bar_raw.to_f)
   hum_cal = sensor.hum($hum_raw.to_f)
   temp_act = temp_cal / 100.0
-  press_act = press_cal / 100.0
+  bar_act = bar_cal / 100.0
   hum_act = hum_cal / 1024.0
   print "TEMP : "
   print temp_act
@@ -166,6 +166,5 @@ loop do
   print " hPa  HUM : "
   print hum_act
   print " %\n" 
-  p "hum#{sensor.hum($hum_raw.to_f)}"
   delay(1000)
 end
